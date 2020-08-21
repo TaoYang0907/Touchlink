@@ -215,7 +215,7 @@ extern "C"
 // Define if Touchlink Target device will use fixed or random 
 // channel from bdbcTLPrimaryChannelSet during commissioning
 // when is Factory New (development only).
-#define TOUCHLINK_FIXED_CHANNEL_ENABLE                          FALSE
+#define TOUCHLINK_FIXED_CHANNEL_ENABLE                          TRUE
 #define TOUCHLINK_FIXED_CHANNEL                                 TOUCHLINK_FIRST_CHANNEL
 
 // set TOUCHLINK_CH_OFFSET to Ch_Plus_1, Ch_Plus_2 or Ch_Plus_3 to shift
