@@ -243,10 +243,17 @@ extern "C"
 #define CRC_HIGHBIT  0x8000u //for CRC_ORDER =16
 
 // TOUCHLINK Profile Constants
-#define BDBCTL_INTER_PAN_TRANS_ID_LIFETIME               8000 // 8s
-#define BDBCTL_MIN_STARTUP_DELAY_TIME                    2000 // 2s
+//#define BDBCTL_INTER_PAN_TRANS_ID_LIFETIME               8000 // 8s
+//#define BDBCTL_MIN_STARTUP_DELAY_TIME                    2000 // 2s
+//#define BDBCTL_PRIMARY_CHANNEL_LIST                      ( 0x02108800 << TOUCHLINK_CH_OFFSET )
+//#define BDBCTL_RX_WINDOW_DURATION                        5000 // 5s
+//#define BDBCTL_SCAN_TIME_BASE_DURATION                   250  // 0.25s
+//#define BDBCTL_SECONDARY_CHANNEL_LIST                    ( 0x07fff800 ^ BDBCTL_PRIMARY_CHANNEL_LIST ) // TOUCHLINK Secondary Channels
+
+#define BDBCTL_INTER_PAN_TRANS_ID_LIFETIME               4000 // 8s
+#define BDBCTL_MIN_STARTUP_DELAY_TIME                    0 // 2s
 #define BDBCTL_PRIMARY_CHANNEL_LIST                      ( 0x02108800 << TOUCHLINK_CH_OFFSET )
-#define BDBCTL_RX_WINDOW_DURATION                        5000 // 5s
+#define BDBCTL_RX_WINDOW_DURATION                        2500 // 5s
 #define BDBCTL_SCAN_TIME_BASE_DURATION                   250  // 0.25s
 #define BDBCTL_SECONDARY_CHANNEL_LIST                    ( 0x07fff800 ^ BDBCTL_PRIMARY_CHANNEL_LIST ) // TOUCHLINK Secondary Channels
 

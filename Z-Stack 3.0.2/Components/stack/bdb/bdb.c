@@ -2296,7 +2296,7 @@ void bdb_startResumeCommissioningProcess(void)
         initiatorSelectNwkParams();
       }
       
-      touchLinkInitiator_StartDevDisc( );  
+//      touchLinkInitiator_StartDevDisc( );  
       
       bdb_NotifyCommissioningModeStart(BDB_COMMISSIONING_TOUCHLINK);
     }
