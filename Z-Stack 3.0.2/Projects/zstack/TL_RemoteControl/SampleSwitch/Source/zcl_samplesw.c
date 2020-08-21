@@ -383,7 +383,7 @@ static void zclSampleSw_HandleKeys( byte shift, byte keys )
   if ( keys & HAL_KEY_SW_6 )  // P0_1
   {
     touchLinkInitiator_StartDevDisc();
-    osal_start_timerEx(zclSampleSw_TaskID,TOUCHLINK_RESET_TARGET_EVT,2500);
+    osal_start_timerEx(zclSampleSw_TaskID,TOUCHLINK_RESET_TARGET_EVT,2000);
   }
 }
 
