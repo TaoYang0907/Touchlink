@@ -186,10 +186,9 @@ void HalKeyInit( void )
   halKeySavedKeys = 0;
 
   HAL_KEY_SW_6_SEL &= ~(HAL_KEY_SW_6_BIT);    /* Set pin function to GPIO */
-
-#if ! defined ENABLE_LED4_DISABLE_S1
   HAL_KEY_SW_6_DIR &= ~(HAL_KEY_SW_6_BIT);    /* Set pin direction to Input */
-#endif
+  P0INP &= ~(HAL_KEY_SW_6_BIT);
+  P2INP &= ~BV(5);
 
   HAL_KEY_JOY_MOVE_SEL &= ~(HAL_KEY_JOY_MOVE_BIT); /* Set pin function to GPIO */
   HAL_KEY_JOY_MOVE_DIR &= ~(HAL_KEY_JOY_MOVE_BIT); /* Set pin direction to Input */

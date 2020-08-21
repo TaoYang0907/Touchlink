@@ -3,4 +3,5 @@ Z-Stack 3.0.2/Projects/zstack/*/*/*/RouterEB/
 Z-Stack 3.0.2/Projects/zstack/*/*/*/EndDeviceEB/
 Z-Stack 3.0.2/Projects/zstack/*/*/*/settings/
 
-Z-Stack 3.0.2/Projects/zstack/HomeAutomation/SampleSwitch/CC2530DB/SampleSwitch.dep
+Z-Stack 3.0.2/Projects/zstack/*/*/*/SampleSwitch.dep
+Z-Stack 3.0.2/Projects/zstack/*/*/*/SampleSwitch.ewt

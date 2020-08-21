@@ -95,13 +95,10 @@
 #include "bdb.h"
 #include "bdb_interface.h"
 
-#include "zcl_sampleapps_ui.h"
 
 /*********************************************************************
  * MACROS
  */
-#define UI_STATE_TOGGLE_LIGHT 1 //UI_STATE_BACK_FROM_APP_MENU is item #0, so app item numbers should start from 1
-
 #define APP_TITLE "TI Sample Switch"
 
 /*********************************************************************
@@ -138,7 +135,6 @@ static endPointDesc_t sampleSw_TestEp =
   (afNetworkLatencyReq_t)0            // No Network Latency req
 };
 
-//static uint8 aProcessCmd[] = { 1, 0, 0, 0 }; // used for reset command, { length + cmd0 + cmd1 + data }
 
 devStates_t zclSampleSw_NwkState = DEV_INIT;
 
@@ -175,21 +171,13 @@ static uint8 zclSampleSw_ProcessInDiscAttrsExtRspCmd( zclIncomingMsg_t *pInMsg )
 static void zclSampleSw_ProcessOTAMsgs( zclOTA_CallbackMsg_t* pMsg );
 #endif
 
-void zclSampleSw_UiActionToggleLight(uint16 keys);
-void zclSampleSw_UiUpdateLcd(uint8 uiCurrentState, char * line[3]);
-
 static void zclSampleApp_BatteryWarningCB( uint8 voltLevel);
 
 
 /*********************************************************************
  * CONSTANTS
  */
-  const uiState_t zclSampleSw_UiStatesMain[] = 
-  {
-    /*  UI_STATE_BACK_FROM_APP_MENU  */   {UI_STATE_DEFAULT_MOVE,       UI_STATE_TOGGLE_LIGHT,  UI_KEY_SW_5_PRESSED, &UI_ActionBackFromAppMenu}, //do not change this line, except for the second item, which should point to the last entry in this menu
-    /*  UI_STATE_TOGGLE_LIGHT        */   {UI_STATE_BACK_FROM_APP_MENU, UI_STATE_DEFAULT_MOVE,  UI_KEY_SW_5_PRESSED | UI_KEY_SW_5_RELEASED, &zclSampleSw_UiActionToggleLight},
-  };
-  
+
 /*********************************************************************
  * REFERENCED EXTERNALS
  */
@@ -291,10 +279,6 @@ void zclSampleSw_Init( byte task_id )
 #endif
 
   zdpExternalStateTaskID = zclSampleSw_TaskID;
-
-  UI_Init(zclSampleSw_TaskID, SAMPLEAPP_LCD_AUTO_UPDATE_EVT, SAMPLEAPP_KEY_AUTO_REPEAT_EVT, &zclSampleSw_IdentifyTime, APP_TITLE, &zclSampleSw_UiUpdateLcd, zclSampleSw_UiStatesMain);
-
-  UI_UpdateLcd();
 }
 
 /*********************************************************************
@@ -338,7 +322,6 @@ uint16 zclSampleSw_event_loop( uint8 task_id, uint16 events )
           break;
 
         case ZDO_STATE_CHANGE:
-          UI_DeviceStateUpdated((devStates_t)(MSGpkt->hdr.status));
           break;
 
 #if defined (OTA_CLIENT) && (OTA_CLIENT == TRUE)
@@ -369,13 +352,11 @@ uint16 zclSampleSw_event_loop( uint8 task_id, uint16 events )
 
   if ( events & SAMPLEAPP_LCD_AUTO_UPDATE_EVT )
   {
-    UI_UpdateLcd();
     return ( events ^ SAMPLEAPP_LCD_AUTO_UPDATE_EVT );
   }
 
   if ( events & SAMPLEAPP_KEY_AUTO_REPEAT_EVT )
   {
-    UI_MainStateMachine(UI_KEY_AUTO_PRESSED);
     return ( events ^ SAMPLEAPP_KEY_AUTO_REPEAT_EVT );
   }
   // Discard unknown events
@@ -398,7 +379,6 @@ uint16 zclSampleSw_event_loop( uint8 task_id, uint16 events )
  */
 static void zclSampleSw_HandleKeys( byte shift, byte keys )
 {
-  UI_MainStateMachine(keys);
 }
 
 
@@ -474,8 +454,7 @@ static void zclSampleSw_ProcessCommissioningStatus(bdbCommissioningModeMsg_t *bd
     break;
 #endif 
   }
-  
-  UI_UpdateComissioningStatus(bdbCommissioningModeMsg);
+
 }
 
 /*********************************************************************
@@ -491,9 +470,6 @@ static void zclSampleSw_ProcessCommissioningStatus(bdbCommissioningModeMsg_t *bd
 static void zclSampleSw_BasicResetCB( void )
 {
   zclSampleSw_ResetAttributesToDefaultValues();
-
-  // update the display
-  UI_UpdateLcd( ); 
 }
 
 /*********************************************************************
@@ -790,31 +766,3 @@ static void zclSampleSw_ProcessOTAMsgs( zclOTA_CallbackMsg_t* pMsg )
 
 /****************************************************************************
 ****************************************************************************/
-
-void zclSampleSw_UiActionToggleLight(uint16 keys)
-{
-  if (zclSampleSw_OnOffSwitchActions == ON_OFF_SWITCH_ACTIONS_TOGGLE)
-  {
-    if (keys & UI_KEY_SW_5_PRESSED)
-    {
-      zclGeneral_SendOnOff_CmdToggle( SAMPLESW_ENDPOINT, &zclSampleSw_DstAddr, FALSE, bdb_getZCLFrameCounter() );
-    }
-  }
-  else if (((keys & UI_KEY_SW_5_PRESSED) && (zclSampleSw_OnOffSwitchActions == ON_OFF_SWITCH_ACTIONS_ON))
-    || ((keys & UI_KEY_SW_5_RELEASED) && (zclSampleSw_OnOffSwitchActions == ON_OFF_SWITCH_ACTIONS_OFF)))
-  {
-    zclGeneral_SendOnOff_CmdOn( SAMPLESW_ENDPOINT, &zclSampleSw_DstAddr, FALSE, bdb_getZCLFrameCounter() );
-  }
-  else
-  {
-    zclGeneral_SendOnOff_CmdOff( SAMPLESW_ENDPOINT, &zclSampleSw_DstAddr, FALSE, bdb_getZCLFrameCounter() );
-  }
-}
-
-
-void zclSampleSw_UiUpdateLcd(uint8 gui_state, char * line[3])
-{
-  line[2] = "< TOGGLE LIGHT >";
-}
-
-
