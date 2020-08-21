@@ -379,6 +379,10 @@ uint16 zclSampleSw_event_loop( uint8 task_id, uint16 events )
  */
 static void zclSampleSw_HandleKeys( byte shift, byte keys )
 {
+  if ( keys & HAL_KEY_SW_6 )  // Switch 6  MAX_NEIGHBOR_ENTRIES INT_HEAP_LEN TOUCHLINK_WORST_RSSI
+  {
+    HalLedSet ( HAL_LED_2, HAL_LED_MODE_TOGGLE );
+  }
 }
 
 

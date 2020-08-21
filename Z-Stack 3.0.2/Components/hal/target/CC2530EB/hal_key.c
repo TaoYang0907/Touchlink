@@ -342,19 +342,14 @@ void HalKeyPoll (void)
   else
   {
     /* Key interrupt handled here */
-  }
-
-  if (HAL_PUSH_BUTTON1())
-  {
-    keys |= HAL_KEY_SW_6;
+    if (HAL_PUSH_BUTTON1())
+    {
+      keys |= HAL_KEY_SW_6;
+    }
   }
 
   /* Invoke Callback if new keys were depressed */
-  if (pHalKeyProcessFunction
-#ifdef HAL_LEGACY_KEYS
-    && keys //in legacy modes, only report key presses and do not report when a key is released
-#endif
-    )
+  if (keys && (pHalKeyProcessFunction))
   {
     (pHalKeyProcessFunction) (keys, HAL_KEY_STATE_NORMAL);
   }
