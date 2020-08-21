@@ -96,6 +96,7 @@
 #include "bdb_interface.h"
 #include "bdb_touchlink_initiator.h"
 
+#include "OSAL_PwrMgr.h"
 /*********************************************************************
  * MACROS
  */
@@ -231,6 +232,8 @@ static zclGeneral_AppCallbacks_t zclSampleSw_CmdCallbacks =
  */
 void zclSampleSw_Init( byte task_id )
 {
+  osal_pwrmgr_device(PWRMGR_BATTERY);
+
   zclSampleSw_TaskID = task_id;
 
   // Set destination address to indirect

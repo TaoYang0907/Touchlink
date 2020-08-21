@@ -426,6 +426,7 @@ ZStatus_t touchLinkInitiator_AbortTL( void )
  */
 void touchLinkInitiator_Init( uint8 task_id )
 {
+  osal_pwrmgr_device(PWRMGR_BATTERY);
   // Save our own Task ID
   touchLinkInitiator_TaskID = task_id;
 
