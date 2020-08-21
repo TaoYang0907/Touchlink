@@ -2643,6 +2643,8 @@
                     <state>ZCL_IDENTIFY</state>
                     <state>ZCL_ON_OFF</state>
                     <state>ZCL_GROUPS</state>
+                    <state>BDB_TL_INITIATOR</state>
+                    <state>INTER_PAN</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>

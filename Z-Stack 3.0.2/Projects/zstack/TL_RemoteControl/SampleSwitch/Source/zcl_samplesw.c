@@ -94,7 +94,7 @@
 
 #include "bdb.h"
 #include "bdb_interface.h"
-
+#include "bdb_touchlink_initiator.h"
 
 /*********************************************************************
  * MACROS
@@ -142,7 +142,8 @@ devStates_t zclSampleSw_NwkState = DEV_INIT;
 #define DEVICE_POLL_RATE                 8000   // Poll rate for end device
 #endif
 
-#define SAMPLESW_TOGGLE_TEST_EVT   0x1000
+#define SAMPLESW_TOGGLE_TEST_EVT      0x1000
+#define TOUCHLINK_RESET_TARGET_EVT    0x1001
 /*********************************************************************
  * LOCAL FUNCTIONS
  */
@@ -279,6 +280,9 @@ void zclSampleSw_Init( byte task_id )
 #endif
 
   zdpExternalStateTaskID = zclSampleSw_TaskID;
+
+  bdb_StartCommissioning( BDB_COMMISSIONING_MODE_INITIATOR_TL );
+
 }
 
 /*********************************************************************
@@ -295,16 +299,10 @@ uint16 zclSampleSw_event_loop( uint8 task_id, uint16 events )
   afIncomingMSGPacket_t *MSGpkt;
   (void)task_id;  // Intentionally unreferenced parameter
 
-  //Send toggle every 500ms
-  if( events & SAMPLESW_TOGGLE_TEST_EVT )
+  if( events & TOUCHLINK_RESET_TARGET_EVT )
   {
-    osal_start_timerEx(zclSampleSw_TaskID,SAMPLESW_TOGGLE_TEST_EVT,500);
-    zclGeneral_SendOnOff_CmdToggle( SAMPLESW_ENDPOINT, &zclSampleSw_DstAddr, FALSE, 0 );
-    
-    // return unprocessed events
-    return (events ^ SAMPLESW_TOGGLE_TEST_EVT);
+    touchLinkInitiator_ResetToFNSelectedTarget();
   }
-  
   
   if ( events & SYS_EVENT_MSG )
   {
@@ -379,9 +377,10 @@ uint16 zclSampleSw_event_loop( uint8 task_id, uint16 events )
  */
 static void zclSampleSw_HandleKeys( byte shift, byte keys )
 {
-  if ( keys & HAL_KEY_SW_6 )  // Switch 6  MAX_NEIGHBOR_ENTRIES INT_HEAP_LEN TOUCHLINK_WORST_RSSI
+  if ( keys & HAL_KEY_SW_6 )  // P0_1
   {
-    HalLedSet ( HAL_LED_2, HAL_LED_MODE_TOGGLE );
+    touchLinkInitiator_StartDevDisc();
+    osal_start_timerEx(zclSampleSw_TaskID,TOUCHLINK_RESET_TARGET_EVT,2500);
   }
 }
 
