@@ -2625,7 +2625,7 @@
                     <state>TC_LINKKEY_JOIN</state>
                     <state>NV_INIT</state>
                     <state>NV_RESTORE</state>
-                    <state>POWER_SAVING</state>
+                    <state>xPOWER_SAVING</state>
                     <state>NWK_AUTO_POLL</state>
                     <state>xZTOOL_P1</state>
                     <state>xMT_TASK</state>
@@ -5807,6 +5807,18 @@
             <name>$PROJ_DIR$\..\Source\OSAL_SampleSw.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\Source\uart0.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Source\uart0.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Source\user_printf.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Source\user_printf.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\Source\zcl_samplesw.c</name>
         </file>
         <file>
@@ -5846,7 +5858,7 @@
             <name>$PROJ_DIR$\..\..\..\..\..\Components\stack\bdb\bdb_touchlink.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\..\..\Components\stack\bdb\bdb_touchLink.h</name>
+            <name>$PROJ_DIR$\..\..\..\..\..\Components\stack\bdb\bdb_touchlink.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\..\..\Components\stack\bdb\bdb_touchlink_initiator.c</name>

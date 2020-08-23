@@ -97,6 +97,9 @@
 #include "bdb_touchlink_initiator.h"
 
 #include "OSAL_PwrMgr.h"
+
+#include "uart0.h"
+#include "user_printf.h"
 /*********************************************************************
  * MACROS
  */
@@ -232,7 +235,9 @@ static zclGeneral_AppCallbacks_t zclSampleSw_CmdCallbacks =
  */
 void zclSampleSw_Init( byte task_id )
 {
-  osal_pwrmgr_device(PWRMGR_BATTERY);
+  //osal_pwrmgr_device(PWRMGR_BATTERY);
+
+  Uart0_Init(HAL_UART_BR_115200);
 
   zclSampleSw_TaskID = task_id;
 
@@ -305,6 +310,7 @@ uint16 zclSampleSw_event_loop( uint8 task_id, uint16 events )
   if( events & TOUCHLINK_RESET_TARGET_EVT )
   {
     touchLinkInitiator_ResetToFNSelectedTarget();
+    return ( events ^ TOUCHLINK_RESET_TARGET_EVT );
   }
   
   if ( events & SYS_EVENT_MSG )
@@ -383,7 +389,7 @@ static void zclSampleSw_HandleKeys( byte shift, byte keys )
   if ( keys & HAL_KEY_SW_6 )  // P0_1
   {
     touchLinkInitiator_StartDevDisc();
-    osal_start_timerEx(zclSampleSw_TaskID,TOUCHLINK_RESET_TARGET_EVT,2000);
+    osal_start_timerEx(zclSampleSw_TaskID,TOUCHLINK_RESET_TARGET_EVT,2500);
   }
 }
 

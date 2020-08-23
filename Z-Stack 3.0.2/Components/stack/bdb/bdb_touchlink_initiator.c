@@ -70,6 +70,8 @@
 #include "hal_lcd.h"
 #include "hal_led.h"
 
+#include "user_printf.h"
+
 #if defined ( BDB_TL_INITIATOR )
    
 /*********************************************************************
@@ -426,7 +428,7 @@ ZStatus_t touchLinkInitiator_AbortTL( void )
  */
 void touchLinkInitiator_Init( uint8 task_id )
 {
-  osal_pwrmgr_device(PWRMGR_BATTERY);
+  //osal_pwrmgr_device(PWRMGR_BATTERY);
   // Save our own Task ID
   touchLinkInitiator_TaskID = task_id;
 
@@ -1570,6 +1572,8 @@ static ZStatus_t initiatorNwkUpdateReqCB( afAddrType_t *srcAddr, bdbTLNwkUpdateR
  */
 static ZStatus_t initiatorScanRspCB( afAddrType_t *srcAddr, bdbTLScanRsp_t *pRsp )
 {
+  printf("Get Scan Response\n");
+
   bdbFindingBindingRespondent_t *pCurr;
   
   if ( osal_get_timeoutEx( touchLinkInitiator_TaskID, TOUCHLINK_TL_SCAN_BASE_EVT )
