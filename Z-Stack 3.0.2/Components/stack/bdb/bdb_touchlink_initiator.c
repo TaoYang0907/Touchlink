@@ -1572,13 +1572,13 @@ static ZStatus_t initiatorNwkUpdateReqCB( afAddrType_t *srcAddr, bdbTLNwkUpdateR
  */
 static ZStatus_t initiatorScanRspCB( afAddrType_t *srcAddr, bdbTLScanRsp_t *pRsp )
 {
-  printf("Get Scan Response\n");
+  printf("Get Scan Response\r\n");
 
   bdbFindingBindingRespondent_t *pCurr;
-  
+ 
   if ( osal_get_timeoutEx( touchLinkInitiator_TaskID, TOUCHLINK_TL_SCAN_BASE_EVT )
        && ( touchLink_IsValidTransID( pRsp->transID ) )
-       && ( pRsp->keyBitmask & touchLink_GetNwkKeyBitmask() ) )
+       /*&& ( pRsp->keyBitmask & touchLink_GetNwkKeyBitmask() )*/ )
   {
 
     uint8 selectThisTarget = FALSE;

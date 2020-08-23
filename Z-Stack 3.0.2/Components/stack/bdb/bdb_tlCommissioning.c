@@ -227,7 +227,7 @@ ZStatus_t bdbTL_Send_ScanReq( uint8 srcEP, afAddrType_t *dstAddr,
   buf[4] = pReq->zInfo.zInfoByte;
   buf[5] = pReq->touchLinkInfo.touchLinkInfoByte;
 
-  printf("Send Scan Req\n");
+  printf("Send Scan Req\r\n");
   return bdbTL_SendInterPANCommand( srcEP, dstAddr, COMMAND_TOUCHLINK_SCAN_REQ,
                                     ZCL_FRAME_CLIENT_SERVER_DIR, seqNum, TOUCHLINK_CMDLEN_SCAN_REQ, buf );
 }
@@ -302,7 +302,7 @@ ZStatus_t bdbTL_Send_ResetToFNReq( uint8 srcEP, afAddrType_t *dstAddr,
 
   VOID zcl_buffer_uint32( buf, pReq->transID );
 
-  printf("send FN Req\n");
+  printf("send FN Req\r\n");
 
   return bdbTL_SendInterPANCommand( srcEP, dstAddr, COMMAND_TOUCHLINK_RESET_TO_FN_REQ,
                                     ZCL_FRAME_CLIENT_SERVER_DIR, seqNum, TOUCHLINK_CMDLEN_RESET_TO_FN_REQ, buf );

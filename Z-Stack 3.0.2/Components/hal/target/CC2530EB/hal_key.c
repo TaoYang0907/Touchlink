@@ -499,7 +499,6 @@ HAL_ISR_FUNCTION( halKeyPort0Isr, P0INT_VECTOR )
   if (HAL_KEY_SW_6_PXIFG & HAL_KEY_SW_6_BIT)
   {
     halProcessKeyInterrupt();
-    printf("KEY1 has been pressed\n");
   }
 
   /*
