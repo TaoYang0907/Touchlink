@@ -156,7 +156,8 @@
 
 /* S1 */
 #define PUSH1_BV          BV(1)
-#define PUSH1_SBIT        P0_7
+//#define PUSH1_SBIT        P0_7
+#define PUSH1_SBIT        P0_1
 #define PUSH1_POLARITY    ACTIVE_LOW
 
 //#if defined (HAL_BOARD_CC2530EB_REV17)

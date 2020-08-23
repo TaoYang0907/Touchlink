@@ -109,8 +109,10 @@
 
 /* SW_6 is at P0.1 */
 #define HAL_KEY_SW_6_PORT   P0
-//#define HAL_KEY_SW_6_BIT    BV(1)
-#define HAL_KEY_SW_6_BIT    BV(7)
+
+#define HAL_KEY_SW_6_BIT    BV(1)
+
+//#define HAL_KEY_SW_6_BIT    BV(7)
 #define HAL_KEY_SW_6_SEL    P0SEL
 #define HAL_KEY_SW_6_DIR    P0DIR
 
@@ -123,8 +125,10 @@
 #define HAL_KEY_SW_6_IEN      IEN1  /* CPU interrupt mask register */
 #define HAL_KEY_SW_6_IENBIT   BV(5) /* Mask bit for all of Port_0 */
 #define HAL_KEY_SW_6_ICTL     P0IEN /* Port Interrupt Control register */
-//#define HAL_KEY_SW_6_ICTLBIT  BV(1) /* P0IEN - P0.1 enable/disable bit */
-#define HAL_KEY_SW_6_ICTLBIT  BV(7) /* P0IEN - P0.1 enable/disable bit */
+
+#define HAL_KEY_SW_6_ICTLBIT  BV(1) /* P0IEN - P0.1 enable/disable bit */
+
+//#define HAL_KEY_SW_6_ICTLBIT  BV(7) /* P0IEN - P0.1 enable/disable bit */
 #define HAL_KEY_SW_6_PXIFG    P0IFG /* Interrupt flag at source */
 
 /* Joy stick move at P2.0 */
@@ -241,8 +245,8 @@ void HalKeyConfig (bool interruptEnable, halKeyCBack_t cback)
      */
     HAL_KEY_SW_6_ICTL |= HAL_KEY_SW_6_ICTLBIT;
     HAL_KEY_SW_6_IEN |= HAL_KEY_SW_6_IENBIT;
-//    HAL_KEY_SW_6_PXIFG = ~(HAL_KEY_SW_6_BIT);
-    HAL_KEY_SW_6_PXIFG = 0;
+    HAL_KEY_SW_6_PXIFG = ~(HAL_KEY_SW_6_BIT);
+//    HAL_KEY_SW_6_PXIFG = 0;
 
 
 
@@ -428,8 +432,8 @@ void halProcessKeyInterrupt (void)
 
   if (HAL_KEY_SW_6_PXIFG & HAL_KEY_SW_6_BIT)  /* Interrupt Flag has been set */
   {
-//    HAL_KEY_SW_6_PXIFG = ~(HAL_KEY_SW_6_BIT); /* Clear Interrupt Flag */
-    HAL_KEY_SW_6_PXIFG = 0; /* Clear Interrupt Flag */
+    HAL_KEY_SW_6_PXIFG = ~(HAL_KEY_SW_6_BIT); /* Clear Interrupt Flag */
+//    HAL_KEY_SW_6_PXIFG = 0; /* Clear Interrupt Flag */
     valid = TRUE;
   }
 
