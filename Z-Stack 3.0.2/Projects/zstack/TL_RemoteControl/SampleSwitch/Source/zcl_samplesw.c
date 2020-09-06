@@ -235,7 +235,7 @@ static zclGeneral_AppCallbacks_t zclSampleSw_CmdCallbacks =
  */
 void zclSampleSw_Init( byte task_id )
 {
-  //osal_pwrmgr_device(PWRMGR_BATTERY);
+//  osal_pwrmgr_device(PWRMGR_BATTERY);
 
   Uart0_Init(HAL_UART_BR_115200);
 
@@ -390,7 +390,7 @@ static void zclSampleSw_HandleKeys( byte shift, byte keys )
   {
     printf("KEY1 has been pressed\r\n");
     touchLinkInitiator_StartDevDisc();
-    osal_start_timerEx(zclSampleSw_TaskID,TOUCHLINK_RESET_TARGET_EVT,2500);
+    osal_start_timerEx(zclSampleSw_TaskID,TOUCHLINK_RESET_TARGET_EVT,4000);
   }
 }
 
