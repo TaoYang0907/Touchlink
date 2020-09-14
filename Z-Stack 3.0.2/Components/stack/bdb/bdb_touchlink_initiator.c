@@ -92,6 +92,7 @@
 #define TOUCHLINK_INITIATOR_NUM_SCAN_REQ_PRIMARY       8  // 5 times on 1st channel, plus once for each remianing primary channel
 #define TOUCHLINK_INITIATOR_NUM_SCAN_REQ_EXTENDED      20 // (TOUCHLINK_NUM_SCAN_REQ_PRIMARY + sizeof(TOUCHLINK_SECONDARY_CHANNELS_SET))
 
+#define TOUCHLINK_RESET_TARGET_EVT    0x1001
 /*********************************************************************
  * TYPEDEFS
  */
@@ -552,6 +553,13 @@ ZStatus_t touchLinkInitiator_RegisterForMsg( uint8 taskId )
  */
 uint16 touchLinkInitiator_event_loop( uint8 task_id, uint16 events )
 {
+  if( events & TOUCHLINK_RESET_TARGET_EVT )
+  {
+    touchLinkInitiator_ResetToFNSelectedTarget();
+    //touchLinkInitiator_AbortTL();
+    return ( events ^ TOUCHLINK_RESET_TARGET_EVT );
+  }
+
   if ( events & SYS_EVENT_MSG )
   {
     osal_event_hdr_t *pMsg;
@@ -1619,6 +1627,7 @@ static ZStatus_t initiatorScanRspCB( afAddrType_t *srcAddr, bdbTLScanRsp_t *pRsp
         devInfoReq.transID = pRsp->transID;
         devInfoReq.startIndex = 0;
 
+        osal_start_timerEx( touchLinkInitiator_TaskID, TOUCHLINK_RESET_TARGET_EVT, 100 );
         return bdbTL_Send_DeviceInfoReq( TOUCHLINK_INTERNAL_ENDPOINT, srcAddr,
                                     &devInfoReq, initiatorSeqNum++ );
       }
@@ -1631,6 +1640,7 @@ static ZStatus_t initiatorScanRspCB( afAddrType_t *srcAddr, bdbTLScanRsp_t *pRsp
         pCurr->data.endPoint = pRsp->deviceInfo.endpoint;
         pCurr->data.panId = srcAddr->panId;
       }
+      osal_start_timerEx( touchLinkInitiator_TaskID, TOUCHLINK_RESET_TARGET_EVT, 100 );
     }
     return ( ZSuccess );
   }

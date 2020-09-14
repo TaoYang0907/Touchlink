@@ -390,7 +390,7 @@ static void zclSampleSw_HandleKeys( byte shift, byte keys )
   {
     printf("KEY1 has been pressed\r\n");
     touchLinkInitiator_StartDevDisc();
-    osal_start_timerEx(zclSampleSw_TaskID,TOUCHLINK_RESET_TARGET_EVT,4000);
+//    osal_start_timerEx(zclSampleSw_TaskID,TOUCHLINK_RESET_TARGET_EVT,4000);
   }
 }
 
