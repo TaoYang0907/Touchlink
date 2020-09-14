@@ -556,7 +556,6 @@ uint16 touchLinkInitiator_event_loop( uint8 task_id, uint16 events )
   if( events & TOUCHLINK_RESET_TARGET_EVT )
   {
     touchLinkInitiator_ResetToFNSelectedTarget();
-    //touchLinkInitiator_AbortTL();
     return ( events ^ TOUCHLINK_RESET_TARGET_EVT );
   }
 

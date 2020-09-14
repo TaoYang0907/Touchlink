@@ -147,7 +147,6 @@ devStates_t zclSampleSw_NwkState = DEV_INIT;
 #endif
 
 #define SAMPLESW_TOGGLE_TEST_EVT      0x1000
-#define TOUCHLINK_RESET_TARGET_EVT    0x1001
 /*********************************************************************
  * LOCAL FUNCTIONS
  */
@@ -307,12 +306,6 @@ uint16 zclSampleSw_event_loop( uint8 task_id, uint16 events )
   afIncomingMSGPacket_t *MSGpkt;
   (void)task_id;  // Intentionally unreferenced parameter
 
-  if( events & TOUCHLINK_RESET_TARGET_EVT )
-  {
-    touchLinkInitiator_ResetToFNSelectedTarget();
-    return ( events ^ TOUCHLINK_RESET_TARGET_EVT );
-  }
-  
   if ( events & SYS_EVENT_MSG )
   {
     while ( (MSGpkt = (afIncomingMSGPacket_t *)osal_msg_receive( zclSampleSw_TaskID )) )
@@ -390,7 +383,6 @@ static void zclSampleSw_HandleKeys( byte shift, byte keys )
   {
     printf("KEY1 has been pressed\r\n");
     touchLinkInitiator_StartDevDisc();
-//    osal_start_timerEx(zclSampleSw_TaskID,TOUCHLINK_RESET_TARGET_EVT,4000);
   }
 }
 
