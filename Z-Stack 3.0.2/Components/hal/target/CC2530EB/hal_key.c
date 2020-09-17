@@ -89,8 +89,6 @@
 #include "hal_key.h"
 #include "osal.h"
 
-#include "user_printf.h"
-
 #if (defined HAL_KEY) && (HAL_KEY == TRUE)
 
 /**************************************************************************************************

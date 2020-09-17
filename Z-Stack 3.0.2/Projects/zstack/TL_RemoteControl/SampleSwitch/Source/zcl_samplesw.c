@@ -97,9 +97,6 @@
 #include "bdb_touchlink_initiator.h"
 
 #include "OSAL_PwrMgr.h"
-
-#include "uart0.h"
-#include "user_printf.h"
 /*********************************************************************
  * MACROS
  */

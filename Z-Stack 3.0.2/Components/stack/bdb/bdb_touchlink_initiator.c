@@ -70,8 +70,6 @@
 #include "hal_lcd.h"
 #include "hal_led.h"
 
-#include "user_printf.h"
-
 #if defined ( BDB_TL_INITIATOR )
    
 /*********************************************************************

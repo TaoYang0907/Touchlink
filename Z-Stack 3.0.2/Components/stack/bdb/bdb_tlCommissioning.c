@@ -50,8 +50,6 @@
 
 #include "stub_aps.h"
 
-#include "user_printf.h"
-
 #if defined ( BDB_TL_TARGET ) || defined ( BDB_TL_INITIATOR )
    
 /*********************************************************************
