@@ -251,7 +251,7 @@ void bdb_Init( byte task_id )
 {
   bdb_TaskID = task_id;
 
-//  osal_pwrmgr_device(PWRMGR_BATTERY);
+  osal_pwrmgr_device(PWRMGR_BATTERY);
 
 #if (ZG_BUILD_COORDINATOR_TYPE)
   if(ZG_DEVICE_COORDINATOR_TYPE)

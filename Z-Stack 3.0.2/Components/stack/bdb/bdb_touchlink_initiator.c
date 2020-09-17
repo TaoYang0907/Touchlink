@@ -429,7 +429,7 @@ ZStatus_t touchLinkInitiator_AbortTL( void )
  */
 void touchLinkInitiator_Init( uint8 task_id )
 {
-  //osal_pwrmgr_device(PWRMGR_BATTERY);
+  osal_pwrmgr_device(PWRMGR_BATTERY);
   // Save our own Task ID
   touchLinkInitiator_TaskID = task_id;
 
@@ -1579,8 +1579,6 @@ static ZStatus_t initiatorNwkUpdateReqCB( afAddrType_t *srcAddr, bdbTLNwkUpdateR
  */
 static ZStatus_t initiatorScanRspCB( afAddrType_t *srcAddr, bdbTLScanRsp_t *pRsp )
 {
-  printf("Get Scan Response\r\n");
-  printf("%d\r\n",touchLink_GetMsgRssi());
   bdbFindingBindingRespondent_t *pCurr;
  
   if ( osal_get_timeoutEx( touchLinkInitiator_TaskID, TOUCHLINK_TL_SCAN_BASE_EVT )
@@ -1590,7 +1588,7 @@ static ZStatus_t initiatorScanRspCB( afAddrType_t *srcAddr, bdbTLScanRsp_t *pRsp
 
     uint8 selectThisTarget = FALSE;
     int8 rssi = touchLink_GetMsgRssi();
-    printf("pfn%d\r\n",pfnSelectDiscDevCB);
+
     if ( pfnSelectDiscDevCB != NULL )
     {
       selectThisTarget = pfnSelectDiscDevCB( pRsp, rssi );
@@ -1604,7 +1602,7 @@ static ZStatus_t initiatorScanRspCB( afAddrType_t *srcAddr, bdbTLScanRsp_t *pRsp
         selectThisTarget = TRUE;
       }
     }
-    printf("sel%d\r\n",selectThisTarget);
+
     if ( selectThisTarget )
     {
       selectedTarget.scanRsp = *pRsp;
@@ -1613,11 +1611,9 @@ static ZStatus_t initiatorScanRspCB( afAddrType_t *srcAddr, bdbTLScanRsp_t *pRsp
       selectedTarget.srcAddr.panId = 0xFFFF;
       touchLinkResponseID = pRsp->responseID;
       touchLinkTransID = pRsp->transID;
-   //   printf("%d\r\n",pRsp->logicalChannel);
       // Remember channel we heard back this scan response on
       ZMacGetReq( ZMacChannel, &(selectedTarget.rxChannel));
-      printf("%d\r\n",selectedTarget.rxChannel);
-      printf("num%d\r\n",pRsp->numSubDevices);
+
       if ( pRsp->numSubDevices > 1 )
       {
         selectedTarget.scanRsp.deviceInfo.endpoint = DEV_INFO_INVALID_EP;
