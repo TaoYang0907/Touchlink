@@ -157,7 +157,7 @@ extern "C"
 // Manufacturer specific threshold (greater than -128),
 // do not respond to Touch-link scan request if reached
 #ifndef TOUCHLINK_WORST_RSSI
-#define TOUCHLINK_WORST_RSSI                                    -72 // dBm
+#define TOUCHLINK_WORST_RSSI                                    -70 // dBm
 #endif
  
 // Pre-programmed RSSI correction offset (0x00-0x20)
